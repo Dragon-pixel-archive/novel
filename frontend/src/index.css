@@ -1,111 +1,238 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --bg: #17151b;
+  --surface: #201d25;
+  --surface-hover: #29252f;
+  --border: #35303c;
+  --text: #ece8e4;
+  --text-muted: #928d99;
+  --accent: #d4a03c;
+  --accent-secondary: #4d7a6f;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-reading: 'Lora', serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
+  max-width: 1100px;
   margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+  padding: 32px 20px 80px;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
+a { color: inherit; text-decoration: none; }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
   margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
+/* ---- Trạng thái / tag kiểu HUD ---- */
+.status {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid var(--border);
   border-radius: 4px;
-  color: var(--text-h);
+  color: var(--text-muted);
+}
+.status-ongoing { color: var(--accent); border-color: var(--accent); }
+.status-completed { color: var(--accent-secondary); border-color: var(--accent-secondary); }
+
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.tag {
+  font-size: 11px;
+  font-family: var(--font-body);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
 }
 
-code {
+/* ---- HomePage: grid danh sách truyện ---- */
+.novel-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.novel-card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.novel-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.novel-card img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  display: block;
+  background: var(--surface-hover);
+}
+.novel-card > div { padding: 14px; }
+.novel-card h3 {
+  font-size: 16px;
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+.novel-card .author {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+.novel-card .description {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0 0 8px;
+}
+
+/* ---- NovelDetailPage ---- */
+.novel-detail { max-width: 800px; margin: 0 auto; }
+.novel-header {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.novel-header img {
+  width: 180px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.novel-header h1 { font-size: 26px; }
+.novel-header .author {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0 0 10px;
+}
+.novel-detail .description {
+  font-family: var(--font-reading);
   font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  line-height: 1.8;
+  color: var(--text);
+  white-space: pre-wrap;
+  margin: 24px 0;
+}
+
+.chapter-list h2 {
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+.chapter-list ul { list-style: none; padding: 0; margin: 0; }
+.chapter-list li {
+  border-bottom: 1px solid var(--border);
+}
+.chapter-list li a {
+  display: block;
+  padding: 12px 4px;
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+.chapter-list li a:hover { color: var(--accent); }
+
+/* ---- ChapterPage ---- */
+.chapter-page {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.back-link {
+  display: inline-block;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+.back-link:hover { color: var(--accent); }
+
+.chapter-page h1 {
+  font-size: 22px;
+  margin-bottom: 24px;
+}
+
+.chapter-content {
+  font-family: var(--font-reading);
+  font-size: 19px;
+  line-height: 1.85;
+  color: var(--text);
+  white-space: pre-wrap;
+  margin-bottom: 40px;
+}
+
+.chapter-nav {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.chapter-nav a { color: var(--accent); }
+.chapter-nav a:hover { text-decoration: underline; }
+.chapter-nav .disabled { color: var(--border); }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .novel-header { flex-direction: column; }
+  .novel-header img { width: 140px; }
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 0 28px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.site-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.site-logo:hover { color: var(--accent); }
+.site-logo .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
 }

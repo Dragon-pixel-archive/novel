@@ -48,7 +48,7 @@ app.get("/api/health", (req, res) => {
 app.use("/api/novels", novelRouter);
 app.use("/api/tags", tagRouter);
 app.use("/api/admin", adminRouter);
-app.post("/upload/:id", 
+app.post("/api/upload/:id", 
     upload.single("cover"),
     PostCoverControl
 )

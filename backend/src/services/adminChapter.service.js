@@ -2,6 +2,14 @@ import { eq } from "drizzle-orm";
 import { db } from "../config/database.js";
 import { chapters } from "../db/schema/index.ts";
 
+export async function getFullChapter(id) {
+    return await db
+        .select()
+        .from(chapters)
+        .where(eq(chapters.id, id))
+        .limit(1)
+}
+
 export async function postChapter(data) {
     const result = await db
         .insert(chapters)

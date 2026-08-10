@@ -53,7 +53,7 @@ function NovelDetailPage() {
             {novel.chapters.map((c) => (
               <li key={c.id}>
                 <Link to={`/novel/${slug}/chapter/${c.chapterNumber}`}>
-                    Chương {c.chapterNumber}: {c.tittle}
+                  Chương {c.chapterNumber}: {c.title}
                 </Link>
               </li>
             ))}

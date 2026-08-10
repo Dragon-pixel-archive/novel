@@ -1,4 +1,27 @@
-import { deleteChapter, postChapter, updateChapter } from "../services/adminChapter.service.js";
+import { deleteChapter, getFullChapter, postChapter, updateChapter } from "../services/adminChapter.service.js";
+
+
+export async function getFullChapterControl(req, res, next) {
+    try {
+        const id = Number(req.params.id);
+
+        const Chapter = await getFullChapter(id);
+
+        if(!Chapter) {
+            res.status(404).json({
+                success: false,
+                error: "Chapter not found"
+            })
+        }else{
+            res.status(200).json({
+                success: true,
+                data: Chapter[0]
+            })
+        }
+    }catch(error){
+        next(error);
+    }
+}
 
 export async function postChpaterControl(req, res, next) {
     try {

@@ -1,12 +1,14 @@
 import { Router } from "express";
 import { deleteNovelControl, PostNovelControl, UpdateNovelControl } from "../controllers/adminNovel.controller.js";
 import { validatePostNovel, validateUpdateNovel } from "../validators/adminNovel.validator.js";
-import { deleteChapterControl, postChpaterControl, updateChapterControl } from "../controllers/adminChapter.controller.js";
+import { deleteChapterControl, getFullChapterControl, postChpaterControl, updateChapterControl } from "../controllers/adminChapter.controller.js";
 import { validatePostChapter, validateUpdateChapter } from "../validators/adminChapter.validator.js";
 import { validatePostTag, validatePostTagToNovel } from "../validators/adminTag.validator.js";
 import { deleteTagControl, deleteTagFromNovelControl, postTagControl, postTagToNovelControl } from "../controllers/adminTag.controller.js";
 
 const router = Router();
+
+router.get('/chapters/:id', getFullChapterControl);
 
 router.post('/novels',
     validatePostNovel,

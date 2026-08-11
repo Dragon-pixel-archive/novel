@@ -93,18 +93,26 @@ const handleSubmit = async (e) => {
   }
 
   const handleUpload = async () => {
-    if (!uploadFile || editingId === 'new') return
-    const formData = new FormData()
-    formData.append('cover', uploadFile)
+    if (!uploadFile || editingId === "new") return;
+    const formData = new FormData();
+    formData.append("cover", uploadFile);
+
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}admin/upload/${editingId}`, formData)
-      setMessage({ type: 'success', text: 'Đã upload ảnh bìa' })
-      setUploadFile(null)
-      loadNovels()
+      await api.post(`/upload/${editingId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      setMessage({ type: "success", text: "Đã upload ảnh bìa" });
+      setUploadFile(null);
+      loadNovels();
     } catch (err) {
-      setMessage({ type: 'error', text: err.response?.data?.message || 'Upload thất bại' })
+      setMessage({
+        type: "error",
+        text: err.response?.data?.message || "Upload thất bại",
+      });
     }
-  }
+  };
 
   return (
     <div className="admin-novels">

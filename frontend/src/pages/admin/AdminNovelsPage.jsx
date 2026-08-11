@@ -97,7 +97,7 @@ const handleSubmit = async (e) => {
     const formData = new FormData()
     formData.append('cover', uploadFile)
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/admin/upload/${editingId}`, formData)
+      await axios.post(`${import.meta.env.VITE_API_URL}admin/upload/${editingId}`, formData)
       setMessage({ type: 'success', text: 'Đã upload ảnh bìa' })
       setUploadFile(null)
       loadNovels()
